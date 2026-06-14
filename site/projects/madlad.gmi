@@ -28,10 +28,10 @@ When you tell CSRPC to execute a command, it simply calls out to the shell to ru
 
 CSRPC blocks for the lifetime of the command and listens for messages during that time. If a message is recieved, it is passed as-is to the project to handle it. In the case of Madlad, these messages implement base operations like inserting text, moving the cursor and changing settings.
 
-## Syntax Highlighting
+## Syntax highlighting
 
 In order to keep the codebase small, I didn't implement an LSP server or other fancy language parsing to get simple highlighting. Instead, highlighters are implemented as dynamic libraries that are loaded at runtime, all with a single 'highlight' routine that takes in a string of a single line and outputs a version with ANSI escape sequences in it, representing the highlighted text. While incredibly basic, and unable to support multiline structures, this system suffices for now.
 
-## Text Model
+## Text model
 
 Madlad uses a rather unique model to represent text internally. In technical terms, a buffer is represented as a linked list of fixed-length line strings, with a separate gap buffer representing changes made to the current line. When you change line, those changes are flushed back to the linked list and the contents of the gap buffer are marked as irrelevant. Then, when you make you first edit in a different line, that line's contents are copied into the gap buffer and the change is made. This keep edits fast and allows a primitive single-step undo of certain types of operations. However, you can't undo things like entire line deletions as they never have to bother with the gap buffer in the first place.

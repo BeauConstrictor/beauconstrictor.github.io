@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-# chef - A gemtext -> HTML template processor
+# chef - A gemtext -> HTML/gemini/gopher processor
 
+from urllib.parse import urlparse
 from typing import TextIO
 from pathlib import Path
 import argparse
@@ -116,9 +117,12 @@ def add_gopher_link(output: list[str], l: str, width: int) -> None:
     url  = parts[0]
     name = wrap(" ".join(parts[1:]), width)
 
-    if url.startswith("https://") or url.startswith("mailto:"):
+    if url.startswith("https://"):
         for name_l in name:
-            output.append(f"h{name_l}\t{url}\t_\t_")
+            parsed = urlparse(url)
+            s = f"h{name_l}\t{parsed.path}\t{parsed.hostname}"
+            if parsed.port: s += f"\t{parsed.port}"
+            output.append(s)
     elif url.endswith(".gmi"):
         selector = url[:-4]
         for name_l in name:
@@ -191,4 +195,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

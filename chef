@@ -20,7 +20,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("-f", "--format", required=True)
     parser.add_argument("-t", "--template", default="template.html")
     parser.add_argument("-d", "--define", nargs=2, action="append")
-    parser.add_argument("-w", "--wrap", default=70, type=int)
+    parser.add_argument("-w", "--wrap", default=80, type=int)
 
     return parser.parse_args()
 
@@ -145,7 +145,7 @@ def format_gopher(source: str, args: argparse.Namespace) -> str:
             add_heading(output, l, "-", "### ", args.wrap)
 
         elif l.startswith("=> "):
-            add_gopher_link(output, l)
+            add_gopher_link(output, args.wrap)
 
         elif l == "":
             output.append("i")

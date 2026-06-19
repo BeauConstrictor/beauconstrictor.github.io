@@ -96,20 +96,23 @@ def add_heading(output: list[str], l: str, border: str, prefix: str, width: int)
         output.append("i" + line)
     output.append("i" + border * llen)
 
-def add_gopher_link(output: list[str], l: str) -> None:
+def add_gopher_link(output: list[str], l: str, width: int) -> None:
     parts = l[3:].split(" ")
     if len(parts) == 0: return
     url  = parts[0]
-    name = " ".join(parts[1:])
+    name = wrap(" ".join(parts[1:]), width)
 
     if url.startswith("https://") or url.startswith("mailto:"):
-        output.append(f"9{name}\t{url}\t_\t_")
+        for name_l in name:
+            output.append(f"h{name_l}\t{url}\t_\t_")
     elif url.endswith(".gmi"):
         selector = url[:-4]
-        output.append(f"1{name}\t{selector}")
+        for name_l in name:
+            output.append(f"1{name_l}\t{selector}")
     # TODO: support .txt files
     else:
-        output.append(f"9{name}\t{url}")
+        for name_l in name:
+            output.append(f"9{name_l}\t{url}")
 
 def format_html(source: str, args: argparse.Namespace) -> str:
     with open(args.template, "r", encoding="utf-8") as f:

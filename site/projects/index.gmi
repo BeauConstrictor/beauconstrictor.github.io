@@ -16,4 +16,4 @@ These repos aren't particularly up-to-date, but are guaranteed to contain stable
 => /~beauconstrictor/git/ozpex-micro.git Ozpex Micro - A custom, extensible, retro computer architecture built around the Z80.
 => /~beauconstrictor/git/passwords.sh.git passwords.sh - A super simple password manager that uses a single encrypted text file.
 => /~beauconstrictor/git/quadraserve Quadraserve - A four-protocol server for Gemini, Gopher, HTTP(S) and Finger.
-=> /~beauconstrictor/git/slither.git - A simple single-player demake of slither.io.
+=> /~beauconstrictor/git/slither.git Slither - A simple single-player demake of slither.io.
